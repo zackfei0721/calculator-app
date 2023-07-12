@@ -20,8 +20,19 @@ class Calculator extends Component<Props, State> {
     }
 
     handleInput = (input: string) => {
-
+        if (['+', '-', '*', '/', '%'].includes(input)) {
+            this.setState({ operator: input,
+                            prevValue: this.state.inputValue,
+                            inputValue: '' });
+        } else if (input === '+/-') {
+            this.setState({ inputValue: (parseFloat(this.state.inputValue) * -1).toString() });
+        } else if (input === 'AC') {
+            this.setState({ inputValue: '0',
+                            prevValue: '',
+                            operator: '' });
+        }
     }
+
 
     calculate = () => {
         let result = 0;
@@ -52,11 +63,34 @@ class Calculator extends Component<Props, State> {
         return (
             <div>
                 <Display value={this.state.inputValue} />
-                <div>
+                <div className="calculator-row">
                     <Button onClick={this.handleInput} value="AC" />
                     <Button onClick={this.handleInput} value="+/-" />
                     <Button onClick={this.handleInput} value="%" />
                     <Button onClick={this.handleInput} value="/" />
+                </div>
+                <div className="calculator-row">
+                    <Button onClick={this.handleInput} value="7" />
+                    <Button onClick={this.handleInput} value="8" />
+                    <Button onClick={this.handleInput} value="9" />
+                    <Button onClick={this.handleInput} value="*" />
+                </div>
+                <div className="calculator-row">
+                    <Button onClick={this.handleInput} value="4" />
+                    <Button onClick={this.handleInput} value="5" />
+                    <Button onClick={this.handleInput} value="6" />
+                    <Button onClick={this.handleInput} value="-" />
+                </div>
+                <div className="calculator-row">
+                    <Button onClick={this.handleInput} value="1" />
+                    <Button onClick={this.handleInput} value="2" />
+                    <Button onClick={this.handleInput} value="3" />
+                    <Button onClick={this.handleInput} value="+" />
+                </div>
+                <div className="calculator-row">
+                    <Button onClick={this.handleInput} value="0" />
+                    <Button onClick={this.handleInput} value="." />
+                    <Button onClick={this.calculate} value="=" />
                 </div>
             </div>
         );
