@@ -21,17 +21,38 @@ class Calculator extends Component<Props, State> {
 
     handleInput = (input: string) => {
         if (['+', '-', '*', '/', '%'].includes(input)) {
-            this.setState({ operator: input,
-                            prevValue: this.state.inputValue,
-                            inputValue: '' });
-        } else if (input === '+/-') {
-            this.setState({ inputValue: (parseFloat(this.state.inputValue) * -1).toString() });
-        } else if (input === 'AC') {
-            this.setState({ inputValue: '0',
-                            prevValue: '',
-                            operator: '' });
+            this.setState({ 
+                operator: input,
+                prevValue: this.state.inputValue,
+                inputValue: '' });
+        } else if (input === '=') {
+            this.calculate();
         }
-    }
+        else if (input === '+/-') {
+            this.setState({ 
+                inputValue: (parseFloat(this.state.inputValue) * -1).toString() });
+        } else if (input === 'AC') {
+            this.setState({ 
+                inputValue: '0',
+                prevValue: '',
+                operator: '' });
+        } 
+        else if (input !== '.' && input !== 'AC' && input !== '+/-') {
+            if (this.state.inputValue !== '0' || input === '.') {
+                this.setState({
+                    inputValue: this.state.inputValue + input
+                });}
+            else {
+                this.setState({
+                    inputValue: input
+            })
+            }
+        } else {
+            if (this.state.inputValue !== '0' || input === '.') {
+                this.setState({ 
+                    inputValue: this.state.inputValue + input });
+        }
+    }}
 
 
     calculate = () => {
