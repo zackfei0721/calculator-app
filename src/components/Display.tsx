@@ -6,7 +6,7 @@ type Props = {
 
 const Display: React.FC<Props> = (props) => {
     return (
-        <div>
+        <div className='display'>
             {props.value}
         </div>
     );

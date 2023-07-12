@@ -11,9 +11,9 @@ const Button: React.FC<Props> = (props) => {
     if (['+', '-', '*', '/', '='].includes(props.value)) {
         className = 'button-orange';
     } else if (['AC', '+/-', '%'].includes(props.value)) {
-        className = 'button-gray';
+        className = 'button-grey';
     } else {
-        className = 'button-light-gray';
+        className = 'button-light-grey';
     }
 
     if (props.value === '0') {
