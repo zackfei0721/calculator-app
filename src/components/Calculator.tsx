@@ -7,6 +7,7 @@ type State = {
     inputValue: string,
     prevValue: string,
     operator: string,
+    newInput: boolean
 };
 
 class Calculator extends Component<Props, State> {
@@ -16,6 +17,7 @@ class Calculator extends Component<Props, State> {
             inputValue: '0',
             prevValue: '',
             operator: '',
+            newInput: false
         };
     }
 
@@ -24,7 +26,7 @@ class Calculator extends Component<Props, State> {
             this.setState({ 
                 operator: input,
                 prevValue: this.state.inputValue,
-                inputValue: '' });
+                newInput: true });
         } else if (input === '=') {
             this.calculate();
         }
@@ -35,24 +37,31 @@ class Calculator extends Component<Props, State> {
             this.setState({ 
                 inputValue: '0',
                 prevValue: '',
-                operator: '' });
-        } 
-        else if (input !== '.' && input !== 'AC' && input !== '+/-') {
-            if (this.state.inputValue !== '0' || input === '.') {
+                operator: '',
+                newInput: false });
+        } else if (input === '.' && !this.state.inputValue.includes('.')) {
+            this.setState({ 
+                inputValue: this.state.inputValue + '.', 
+                newInput: false });
+        } else if (input !== '.' && input !== 'AC' && input !== '+/-') {
+            if (this.state.newInput) {
                 this.setState({
-                    inputValue: this.state.inputValue + input
-                });}
-            else {
-                this.setState({
-                    inputValue: input
-            })
+                    inputValue: input,
+                    newInput: false
+                });
+            } else {  
+                if (this.state.inputValue !== '0' || input === '.') {
+                    this.setState({
+                        inputValue: this.state.inputValue + input
+                    });
+                } else {
+                    this.setState({
+                        inputValue: input
+                    })
+                }
             }
-        } else {
-            if (this.state.inputValue !== '0' || input === '.') {
-                this.setState({ 
-                    inputValue: this.state.inputValue + input });
         }
-    }}
+    };
 
 
     calculate = () => {
@@ -76,7 +85,8 @@ class Calculator extends Component<Props, State> {
 
         this.setState({ inputValue: result.toString(),
                         prevValue: '',
-                        operator: ''});
+                        operator: '',
+                        newInput: true});
 
     }
 
