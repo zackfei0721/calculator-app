@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import Display from './Display';
+import './Calculator.css';
 
 type Props = {}
 type State = {
@@ -92,7 +93,7 @@ class Calculator extends Component<Props, State> {
 
     render() {
         return (
-            <div>
+            <div className='calculator-container'>
                 <Display value={this.state.inputValue} />
                 <div className="calculator-row">
                     <Button onClick={this.handleInput} value="AC" />

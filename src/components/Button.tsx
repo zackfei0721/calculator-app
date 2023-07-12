@@ -6,8 +6,22 @@ type Props = {
 };
 
 const Button: React.FC<Props> = (props) => {
+    let className;
+
+    if (['+', '-', '*', '/', '='].includes(props.value)) {
+        className = 'button-orange';
+    } else if (['AC', '+/-', '%'].includes(props.value)) {
+        className = 'button-gray';
+    } else {
+        className = 'button-light-gray';
+    }
+
+    if (props.value === '0') {
+        className += ' wide';
+    }
+
     return (
-        <button onClick={() => props.onClick(props.value)}>
+        <button className={className} onClick={() => props.onClick(props.value)}>
             {props.value}
         </button>
     );
